@@ -1,0 +1,120 @@
+<!--Header-->
+<section class="content-header">
+    <div class="container-fluid">
+        <h1>Home</h1>
+    </div>
+</section>
+
+<!--Search-->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="search" class="form-control form-control-lg" placeholder="Search Title or Description"
+                        [(ngModel)]="searchText"
+                        (keyup.enter)="loadArticleResultList({ PageIndex: 1, PageSize: 5, SearchTerm: this.searchText })">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Add/Edit Modal-->
+<section class="content-header">
+    <div class="modal fade" id="addEditArticleModal" tabindex="-1" role="dialog"
+        aria-labelledby="addEditArticleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEditArticleModalLabel">{{modalTitle}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <app-add-edit-article [article]="article" *ngIf="activateAddEditArticleComponent">
+                    </app-add-edit-article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Modal -->
+<section class="content-header">
+    <div class="modal fade" id="deleteArticleModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteArticleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteArticleModalLabel">Delete Article</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p>Are you sure you want to delete this Article?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="confirmDeleteArticle()" type="button" data-dismiss="modal"
+                        class="btn btn-danger btn-primary">
+                        Yes, I confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Result Content-->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row" *ngFor="let dataItem of articleResultList">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <div style="display: table; width: 100%;">
+                            <h3 style="display: table-cell;">
+                                {{dataItem.Title}}
+                            </h3>
+                            <div class="float-right" style="min-height: 1px; display: table-cell;">
+                                <button type="button" class="btn btn-tool" data-toggle="modal"
+                                    data-target="#addEditArticleModal" (click)="editClick(dataItem)"
+                                    data-backdrop="static" data-keyboard="false">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-toggle="modal"
+                                    data-target="#deleteArticleModal" (click)="deleteClick(dataItem)"
+                                    data-backdrop="static" data-keyboard="false">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="user-block">
+                            <span class="description"
+                                style="margin-left: unset;">{{showCategoryName(dataItem.CategoryId)}} -
+                                {{dataItem.CreatedDateTime| date:'medium'}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>{{dataItem.Description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Pagination-->
+<section class="content">
+    <div class="container-fluid">
+        <div class="">
+            <ngb-pagination class="d-flex justify-content-center" [pageSize]="itemsPerPage"
+                [collectionSize]="numberOfArticles" [(page)]="currentPage" [boundaryLinks]="true"
+                (pageChange)="pageChanged($event)"></ngb-pagination>
+        </div>
+    </div>
+</section>

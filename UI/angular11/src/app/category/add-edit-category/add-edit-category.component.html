@@ -1,0 +1,13 @@
+<section>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <input type="text" id="inputName" class="form-control" [(ngModel)]="name" placeholder="Enter Category Name"
+                name="fullName" ngModel>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="addCategory()" *ngIf="category.Id==0" type="button" class="btn btn-primary">Add</button>
+        <button (click)="updateCategory()" *ngIf="category.Id!=0" type="button" class="btn btn-primary">Update</button>
+    </div>
+</section>

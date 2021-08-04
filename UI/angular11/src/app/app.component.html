@@ -1,0 +1,49 @@
+<section>
+    <div class="wrapper">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <div class="brand-link " data-widget="pushmenu">
+                <img src="../assets/img/news.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light">News Portal</span>
+            </div>
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="home">
+                                <i class="nav-icon fas fa-newspaper"></i>
+                                <p>
+                                    Home
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="article">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Articles
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="category">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Categories
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    <router-outlet></router-outlet>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

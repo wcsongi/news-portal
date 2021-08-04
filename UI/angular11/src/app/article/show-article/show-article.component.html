@@ -1,0 +1,140 @@
+<!--Header-->
+<section class="content-header">
+    <div class="container-fluid">
+        <div style="display: table; width: 100%;">
+            <h1>Articles
+            </h1>
+        </div>
+    </div>
+</section>
+
+<!--Search-->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="search" class="form-control form-control-lg" placeholder="Search Title or Description"
+                        [(ngModel)]="searchText"
+                        (keyup.enter)="loadArticleResultList({ PageIndex: 1, PageSize: 25, SearchTerm: this.searchText })">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Add/Edit Modal with button-->
+<section class="content-header">
+    <div class="container-fluid">
+        <div style="display: table; width: 100%;">
+            <div class="float-right" style="min-height: 15px; display: table-cell;">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                    data-target="#addEditArticleModal" (click)="addClick()" data-backdrop="static"
+                    data-keyboard="false">
+                    Add Article
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addEditArticleModal" tabindex="-1" role="dialog"
+        aria-labelledby="addEditArticleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEditArticleModalLabel">{{modalTitle}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <app-add-edit-article [article]="article" *ngIf="activateAddEditArticleComponent">
+                    </app-add-edit-article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Delete Modal -->
+<section class="content-header">
+    <div class="modal fade" id="deleteArticleModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteArticleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteArticleModalLabel">Delete Article</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <p>Are you sure you want to delete this Article?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="confirmDeleteArticle()" type="button" data-dismiss="modal"
+                        class="btn btn-danger btn-primary">
+                        Yes, I confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Result Content-->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Category Name</th>
+                                <th>Created Date</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let dataItem of articleResultList">
+                                <td>{{dataItem.Title}}</td>
+                                <td style="white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 500px;">{{dataItem.Description}}</td>
+                                <td>{{showCategoryName(dataItem.CategoryId)}}</td>
+                                <td>{{dataItem.CreatedDateTime| date:'medium'}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-tool" data-toggle="modal"
+                                        data-target="#addEditArticleModal" (click)="editClick(dataItem)"
+                                        data-backdrop="static" data-keyboard="false">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-toggle="modal"
+                                        data-target="#deleteArticleModal" (click)="deleteClick(dataItem)"
+                                        data-backdrop="static" data-keyboard="false">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Pagination-->
+<section class="content">
+    <div class="container-fluid">
+        <div class="">
+            <ngb-pagination class="d-flex justify-content-center" [pageSize]="itemsPerPage"
+                [collectionSize]="numberOfArticles" [(page)]="currentPage" [boundaryLinks]="true"
+                (pageChange)="pageChanged($event)"></ngb-pagination>
+        </div>
+    </div>
+</section>

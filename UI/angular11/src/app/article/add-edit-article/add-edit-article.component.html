@@ -1,0 +1,27 @@
+<section>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="inputName">Title</label>
+            <input type="text" id="inputTitle" class="form-control" [(ngModel)]="title"
+                placeholder="Enter Article Title" name="fullName" ngModel>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription">Description</label>
+            <textarea id="inputDescription" type="text" class="form-control"
+                style="margin-top: 0px; margin-bottom: 0px; height: 175px;" [(ngModel)]="description"
+                placeholder="Enter Article Description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="inputStatus">Category</label>
+            <select id="inputStatus" class="form-control custom-select" [(ngModel)]="categoryId">
+                <option *ngFor="let category of categoryList" value="{{category.Id}}">
+                    {{category.Name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="addArticle()" *ngIf="article.Id==0" type="button" class="btn btn-primary">Add</button>
+        <button (click)="updateArticle()" *ngIf="article.Id!=0" type="button" class="btn btn-primary">Update</button>
+    </div>
+</section>
